@@ -21,19 +21,11 @@ class MLPClassifier(nn.Module):
         self.bn4 = nn.BatchNorm1d(32)
         self.bn5 = nn.BatchNorm1d(16)
 
-        self.residual1_linear = nn.Linear(in_features = 21, out_features = 128)
-        self.residual1_bn = nn.BatchNorm1d(128)
-
-        self.residual2_linear = nn.Linear(in_features = 64, out_features = 32)
-        self.residual2_bn = nn.BatchNorm1d(32)
-
     def forward(self, x):
         out = self.dropout(F.relu(self.bn1(self.fc1(x))))
-        out1 = self.dropout(F.relu(self.residual1_bn(self.residual1_linear(x))))
-        out = out1 + self.dropout(F.relu(self.bn2(self.fc2(out))))
+        out = self.dropout(F.relu(self.bn2(self.fc2(out))))
         out = self.dropout(F.relu(self.bn3(self.fc3(out))))
-        out3 = self.dropout(F.relu(self.residual2_bn(self.residual2_linear(out))))
-        out = out3 + self.dropout(F.relu(self.bn4(self.fc4(out))))
+        out = self.dropout(F.relu(self.bn4(self.fc4(out))))
         out = self.dropout(F.relu(self.bn5(self.fc5(out))))
         out = self.fc6(out)
 

@@ -1,4 +1,4 @@
 data/*.csv
 __pycache__/
 practice.py
-catboost_info/
+models/catboost_info/

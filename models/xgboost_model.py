@@ -27,7 +27,7 @@ params_set = {
 }
 
 # Class weight
-class_weight = (y == False).sum() / (y == True).sum()
+class_weight = (y_train == False).sum() / (y_train == True).sum()
 
 # Pipeline
 pipeline = Pipeline([("model", XGBClassifier(objective = "binary:logistic", 

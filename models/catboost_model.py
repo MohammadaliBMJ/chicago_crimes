@@ -20,7 +20,7 @@ y = df["Arrest"]
 X_train, X_test, y_train, y_test = train_test_split(X, y, stratify = y, train_size = 0.8, random_state = 50)
 
 # Calculate class weight
-class_weight = compute_class_weight(class_weight = "balanced", classes = np.array([0, 1]), y = y)
+class_weight = compute_class_weight(class_weight = "balanced", classes = np.array([0, 1]), y = y_train)
 
 # Range of Hyperparameters for Random Search
 params_set = {

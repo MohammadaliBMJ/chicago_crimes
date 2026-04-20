@@ -3,7 +3,6 @@ import lightgbm as lgb
 import pandas as pd
 import numpy as np
 import time
-import matplotlib.pyplot as plt
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split, RandomizedSearchCV
 from sklearn.metrics import precision_score, accuracy_score, recall_score, f1_score

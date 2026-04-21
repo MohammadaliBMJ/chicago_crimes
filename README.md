@@ -144,6 +144,30 @@ python mlp_train.py
 
 ## Project Structure
 
+project/
+|──data/
+|
+|──data_preprocess/
+| |──data_preprocessing.ipynb
+|
+|──models/
+| |──catboost_model.py
+| |──lightgbm_model.py
+| |──mlp_model.py
+| |──mlp_train.py
+| |──xgboost_model.py
+|
+|──results/
+| |──catboost_feature_importance.png
+| |──catboost_results.csv
+| |──lightgbm_feature_importance_gain.png
+| |──lightgbm_feature_importance_split.png
+| |──lightgbm_results.csv
+| |──mlp_results.csv
+| |──xgboost_feature_importance.png
+| |──xgboost_results.csv
+|
+|──README.md
 
 ## Conclusion
 The project trained and evaluated three state-of-the-art gradient boosting models against a neural network (MLP) and a baseline classifier on a real-word dataset.
@@ -151,6 +175,6 @@ The project trained and evaluated three state-of-the-art gradient boosting model
 - The performance of **LightGBM** and **CatBoost** were very close. Both slightly performed below XGBoost but still had strong results.
 - The **MLP** underperformed compared to the other models. specially in recall and F1 score, confirming that neural networks are not always the best choice for tabular data.
 - **XGBoost** had the fastest train time, making it the most efficient high-performing model overall.
-- It
+- It should be considered that LightGBM was trained on CPU.
 
 

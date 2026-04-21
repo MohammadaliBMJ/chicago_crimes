@@ -25,7 +25,7 @@ class_weight = compute_class_weight(class_weight = "balanced", classes = np.arra
 # Range of Hyperparameters for Random Search
 params_set = {
     "model__depth": np.arange(4, 12),
-    "model__learning_rate": np.linspace(0.0001, 0.1, 50),
+    "model__learning_rate": np.linspace(0.001, 0.1, 50),
     "model__iterations": np.arange(256, 512),
     "model__border_count": np.array([16, 32, 64, 128, 256])
 }
@@ -87,6 +87,7 @@ dummy.fit(X_train, y_train)
 dummy_predicts = dummy.predict(X_test)
 
 # Dummy metrics
+precision_dummy = precision_score(y_true = y_test, y_pred = dummy_predicts, zero_division = 0)
 accuracy_dummy = accuracy_score(y_true = y_test, y_pred = dummy_predicts)
 recall_dummy = recall_score(y_true = y_test, y_pred = dummy_predicts)
 f1_dummy = f1_score(y_true = y_test, y_pred = dummy_predicts)
@@ -98,7 +99,8 @@ recall_catboost = recall_score(y_test, predictions)
 f1_catboost = f1_score(y_test, predictions)
 
 metrics_df = pd.DataFrame({
-    "Precision": [precision_catboost, 0],
+    "model": ["CatBoost", "Dummy"],
+    "Precision": [precision_catboost, precision_dummy],
     "Accuracy": [accuracy_catboost, accuracy_dummy],
     "Recall": [recall_catboost, recall_dummy],
     "F1": [f1_catboost, f1_dummy],

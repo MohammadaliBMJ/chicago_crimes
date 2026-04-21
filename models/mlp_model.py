@@ -10,8 +10,7 @@ class MLPClassifier(nn.Module):
         self.fc2 = nn.Linear(in_features = 256, out_features = 128)
         self.fc3 = nn.Linear(in_features = 128, out_features = 64)
         self.fc4 = nn.Linear(in_features = 64, out_features = 32)
-        self.fc5 = nn.Linear(in_features = 32, out_features = 16)
-        self.fc6 = nn.Linear(in_features = 16, out_features = 1)
+        self.fc5 = nn.Linear(in_features = 32, out_features = 1)
 
         self.dropout = nn.Dropout(p)
 
@@ -19,15 +18,13 @@ class MLPClassifier(nn.Module):
         self.bn2 = nn.BatchNorm1d(128)
         self.bn3 = nn.BatchNorm1d(64)
         self.bn4 = nn.BatchNorm1d(32)
-        self.bn5 = nn.BatchNorm1d(16)
 
     def forward(self, x):
         out = self.dropout(F.relu(self.bn1(self.fc1(x))))
         out = self.dropout(F.relu(self.bn2(self.fc2(out))))
         out = self.dropout(F.relu(self.bn3(self.fc3(out))))
         out = self.dropout(F.relu(self.bn4(self.fc4(out))))
-        out = self.dropout(F.relu(self.bn5(self.fc5(out))))
-        out = self.fc6(out)
+        out = self.fc5(out)
 
         return out
 

@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split, RandomizedSearchCV
 from sklearn.metrics import precision_score, accuracy_score, recall_score, f1_score
 import os
 from sklearn.dummy import DummyClassifier
+import matplotlib.pyplot as plt
 
 
 # Load data. Split into features and label
@@ -86,6 +87,7 @@ dummy.fit(X_train, y_train)
 dummy_predicts = dummy.predict(X_test)
 
 # Dummy metrics
+precision_dummy = precision_score(y_true = y_test, y_pred = dummy_predicts, zero_division = 0)
 accuracy_dummy = accuracy_score(y_true = y_test, y_pred = dummy_predicts)
 recall_dummy = recall_score(y_true = y_test, y_pred = dummy_predicts)
 f1_dummy = f1_score(y_true = y_test, y_pred = dummy_predicts)
@@ -98,7 +100,8 @@ f1_lgb = f1_score(y_test, predictions)
 
 
 metrics_df = pd.DataFrame({
-    "Precision": [precision_lgb, 0],
+    "Model": ["LightGBM", "Dummy"],
+    "Precision": [precision_lgb, precision_dummy],
     "Accuracy": [accuracy_lgb, accuracy_dummy],
     "Recall": [recall_lgb, recall_dummy],
     "F1": [f1_lgb, f1_dummy],
@@ -112,10 +115,10 @@ os.makedirs("../results", exist_ok = True)
 metrics_df.to_csv("../results/lightgbm_results.csv", index = False)
 
 # Feature Importance
-lgb.plot_importance(random_search.best_estimator_.named_steps["model"], importance_type = "gain")
+lgb.plot_importance(pipeline.named_steps["model"], importance_type = "gain")
 plt.title("Feature importance LightGBM 'Gain'")
 plt.savefig("../results/lightgbm_feature_importance_gain.png", bbox_inches = "tight")
 
-lgb.plot_importance(random_search.best_estimator_.named_steps["model"], importance_type = "split")
+lgb.plot_importance(pipeline.named_steps["model"], importance_type = "split")
 plt.title("Feature importance LightGBM 'split'")
 plt.savefig("../results/lightgbm_feature_importance_split.png", bbox_inches = "tight")

@@ -21,7 +21,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, stratify = y, train_si
 
 # HyperParameters
 params_set = {
-    "model__eta": np.linspace(0.0001, 0.1, 50),
+    "model__eta": np.linspace(0.001, 0.1, 50),
     "model__max_depth": np.arange(4, 12),
     "model__n_estimators": np.arange(256, 512)
 }
@@ -86,6 +86,7 @@ dummy.fit(X_train, y_train)
 dummy_predicts = dummy.predict(X_test)
 
 # Dummy metrics
+precision_dummy = precision_score(y_true = y_test, y_pred = dummy_predicts, zero_division = 0)
 accuracy_dummy = accuracy_score(y_true = y_test, y_pred = dummy_predicts)
 recall_dummy = recall_score(y_true = y_test, y_pred = dummy_predicts)
 f1_dummy = f1_score(y_true = y_test, y_pred = dummy_predicts)
@@ -98,7 +99,8 @@ f1_xgb = f1_score(y_test, predictions)
 
 
 metrics_df = pd.DataFrame({
-    "Precision": [precision_xgb, 0],
+    "Model": ["XGBoost", "Dummy"],
+    "Precision": [precision_xgb, precision_dummy],
     "Accuracy": [accuracy_xgb, accuracy_dummy],
     "Recall": [recall_xgb, recall_dummy],
     "F1": [f1_xgb, f1_dummy],
